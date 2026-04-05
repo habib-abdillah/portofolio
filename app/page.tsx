@@ -11,7 +11,7 @@ export default function Home() {
         backdrop-blur-md bg-[#0a0a0f]/80
       ">
         <span className="font-display font-extrabold text-lg tracking-tight text-white">
-          dev<span className="text-[#7c6dfa]">.</span>porto
+          DEV<span className="text-[#7c6dfa]">.</span>portofolio
         </span>
 
         <ul className="hidden md:flex gap-8 list-none">
@@ -51,14 +51,13 @@ export default function Home() {
           leading-tight tracking-tight text-white mb-5
         ">
           Halo, saya<br />
-          <span className="text-[#7c6dfa]">Web Developer</span><br />
+          <span className="text-[#7c6dfa]">Full-Stack Developer</span><br />
           berbasis Indonesia.
         </h1>
 
         {/* Subjudul */}
         <p className="text-lg text-[#888] font-light max-w-xl mb-10 leading-relaxed">
-          Saya membangun antarmuka web yang cepat, bersih, dan bermakna —
-          dari konsep hingga deployment.
+          Saya Muhammad Habib Abdillah — developer dengan 3+ tahun pengalaman di PHP, Laravel, dan ekosistem modern. Fokus membangun sistem informasi yang scalable, dari backend hingga deployment.
         </p>
 
         {/* Tombol */}
@@ -98,21 +97,33 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <p className="text-[#888] font-light leading-loose">
             Saya seorang{' '}
-            <strong className="text-[#ddd] font-medium">web developer</strong> yang
-            fokus pada pengalaman pengguna dan performa. Saya senang memecahkan masalah
-            kompleks menjadi antarmuka yang intuitif.
+            <strong className="text-[#ddd] font-medium">full-stack developer</strong>{' '}
+            yang berbasis di Indonesia, dengan latar belakang kuat di{' '}
+            <strong className="text-[#ddd] font-medium">PHP & Laravel</strong> untuk
+            aplikasi enterprise, dan sedang aktif memperluas stack ke Next.js, Docker,
+            dan DevOps.
             <br /><br />
-            Di luar coding, saya juga{' '}
-            <strong className="text-[#ddd] font-medium">berbagi ilmu</strong> — mengajar
-            web development ke mahasiswa dan komunitas lokal.
+            Saat ini sedang membangun{' '}
+            <strong className="text-[#ddd] font-medium">
+              platform modul sistem informasi
+            </strong>{' '}
+            yang dirancang modular — mulai dari SDM, jurnal, hingga akuntansi —
+            siap diintegrasikan ke institusi pendidikan.
+            <br /><br />
+            Saya percaya software yang baik bukan hanya yang berjalan tanpa error,
+            tapi yang bisa{' '}
+            <strong className="text-[#ddd] font-medium">
+              di-maintain, di-scale, dan dipahami
+            </strong>{' '}
+            oleh tim lain.
           </p>
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { num: '3+', desc: 'Tahun pengalaman' },
-              { num: '20+', desc: 'Project selesai' },
-              { num: '40+', desc: 'Siswa diajar' },
-              { num: '5★', desc: 'Rating klien' },
+              { num: '3+', desc: 'Tahun experience' },
+              { num: '5+', desc: 'Project selesai' },
+              { num: '2', desc: 'Stack utama' },
+              { num: '1', desc: 'Produk aktif' },
             ].map(({ num, desc }) => (
               <div
                 key={desc}
@@ -139,9 +150,22 @@ export default function Home() {
 
         <div className="space-y-8">
           {[
-            { label: 'Frontend', items: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'] },
-            { label: 'Backend', items: ['Node.js', 'Prisma', 'PostgreSQL', 'REST API'] },
-            { label: 'Tools', items: ['Git', 'Vercel', 'Figma', 'VS Code'] },
+            {
+              label: 'Backend',
+              items: ['PHP', 'Laravel', 'Node.js', 'REST API', 'PostgreSQL', 'MySQL'],
+            },
+            {
+              label: 'Frontend',
+              items: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'],
+            },
+            {
+              label: 'DevOps & Infrastructure',
+              items: ['Docker', 'Docker Swarm', 'Nginx', 'Linux Server', 'Vercel'],
+            },
+            {
+              label: 'Tools',
+              items: ['Git', 'GitHub', 'VS Code', 'Postman', 'Figma'],
+            },
           ].map(({ label, items }) => (
             <div key={label}>
               <p className="text-xs text-[#444] uppercase tracking-widest mb-3">{label}</p>
@@ -176,23 +200,23 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             {
-              tag: 'Next.js · Tailwind',
-              title: 'Platform Materi Kelas',
-              desc: 'Web untuk distribusi materi ke siswa. Static + ISR, deploy di Vercel.',
+              tag: 'Laravel · MySQL',
+              title: 'Sistem Informasi Pendidikan',
+              desc: 'Platform administrasi institusi pendidikan — manajemen siswa, data akademik, dan pelaporan. Dibangun modular agar mudah dikembangkan per kebutuhan sekolah.',
               live: '#',
               repo: '#',
             },
             {
-              tag: 'React · Node.js',
-              title: 'Dashboard Analytics',
-              desc: 'Visualisasi data real-time untuk monitoring performa aplikasi klien.',
+              tag: 'Laravel · PostgreSQL',
+              title: 'Modul SDM',
+              desc: 'Manajemen sumber daya manusia terintegrasi: data kepegawaian, kehadiran, dan penggajian. Bagian dari ekosistem sistem informasi yang lebih besar.',
               live: '#',
               repo: '#',
             },
             {
-              tag: 'TypeScript · Prisma',
-              title: 'REST API Boilerplate',
-              desc: 'Template API production-ready dengan auth, validasi, dan dokumentasi.',
+              tag: 'Laravel · PostgreSQL',
+              title: 'Modul Jurnal & Akuntansi',
+              desc: 'Pencatatan jurnal keuangan dan laporan akuntansi dasar untuk institusi pendidikan. Antarmuka ramah pengguna non-akuntan.',
               live: '#',
               repo: '#',
             },
@@ -246,20 +270,26 @@ export default function Home() {
               hover:text-[#7c6dfa] transition-colors
             "
           >
-            kamu@email.com
+            muhabibabd@gmail.com
           </a>
           <div className="flex justify-center gap-3 mt-8 flex-wrap">
-            {['GitHub', 'LinkedIn', 'Twitter/X'].map((s) => (
+            {[
+              { label: 'GitHub',     href: 'https://github.com/habib-abdillah' },
+              { label: 'Gitlab',     href: 'https://gitlab.com/muhabibabd' },
+              { label: 'LinkedIn',   href: 'https://www.linkedin.com/in/mhabibabdillah/' },
+            ].map(({ label, href }) => (
               <a
-                key={s}
-                href="#"
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
                   text-xs text-[#555] border border-white/8
                   px-4 py-2 rounded-lg
                   hover:text-white hover:border-[#7c6dfa]/50 transition-all
                 "
               >
-                {s}
+                {label}
               </a>
             ))}
           </div>

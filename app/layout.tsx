@@ -16,7 +16,7 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: 'Nama Kamu — Web Developer',
+  title: 'Habib — Web Developer',
   description: 'Portfolio web developer berbasis Indonesia',
 }
 
