@@ -1,19 +1,10 @@
 import Link from "next/link"
-import { PrismaClient } from "@/app/generated/prisma/client"
-import { PrismaNeonHttp } from "@prisma/adapter-neon"
+import { neon } from "@neondatabase/serverless"
 import { deleteBlog, togglePublishBlog } from "./actions"
 
-const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
-  arrayMode: false,
-  fullResults: false,
-})
-// @ts-ignore
-const prisma = new PrismaClient({ adapter: neonAdapter })
-
 export default async function BlogAdminPage() {
-  const blogList = await prisma.blog.findMany({
-    orderBy: { createdAt: "desc" },
-  })
+  const sql = neon(process.env.DATABASE_URL!)
+  const blogList = await sql`SELECT * FROM "Blog" ORDER BY "createdAt" DESC`
 
   return (
     <div>

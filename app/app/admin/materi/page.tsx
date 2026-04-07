@@ -1,20 +1,19 @@
 import Link from "next/link"
-import { PrismaClient } from "@/app/generated/prisma/client"
-import { PrismaNeonHttp } from "@prisma/adapter-neon"
+import { neon } from "@neondatabase/serverless"
 import { deleteMateri, togglePublish } from "./actions"
 
-const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
-  arrayMode: false,
-  fullResults: false,
-})
-// @ts-ignore
-const prisma = new PrismaClient({ adapter: neonAdapter })
-
 export default async function MateriAdminPage() {
-  const materiList = await prisma.materi.findMany({
-    include: { kelas: true },
-    orderBy: { createdAt: "desc" },
-  })
+  const sql = neon(process.env.DATABASE_URL!)
+  const rawMateri = await sql`
+    SELECT m.*, k.nama as kelas_nama 
+    FROM "Materi" m 
+    LEFT JOIN "Kelas" k ON m."kelasId" = k.id 
+    ORDER BY m."createdAt" DESC
+  `
+  const materiList = rawMateri.map((m: any) => ({
+    ...m,
+    kelas: { nama: m.kelas_nama }
+  }))
 
   return (
     <div>

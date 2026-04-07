@@ -1,24 +1,23 @@
-import { PrismaClient } from "@/app/generated/prisma/client"
-import { PrismaNeonHttp } from "@prisma/adapter-neon"
-import { notFound } from "next/navigation"
+import { neon } from "@neondatabase/serverless"
 import MateriForm from "../../_components/MateriForm"
 
-const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
-  arrayMode: false,
-  fullResults: false,
-})
-// @ts-ignore
-const prisma = new PrismaClient({ adapter: neonAdapter })
+export default async function EditMateriPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const sql = neon(process.env.DATABASE_URL!)
 
-export default async function EditMateriPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const [kelasList, materi] = await Promise.all([
-    prisma.kelas.findMany({ orderBy: { createdAt: "asc" } }),
-    prisma.materi.findUnique({ where: { id } })
+  const [kelasList, materiResult] = await Promise.all([
+    sql`SELECT * FROM "Kelas" ORDER BY "createdAt" ASC`,
+    sql`SELECT * FROM "Materi" WHERE id = ${id}`
   ])
 
+  const materi = materiResult && materiResult.length > 0 ? materiResult[0] : null;
+
   if (!materi) {
-    notFound()
+    return <div className="text-white">Materi tidak ditemukan</div>
   }
 
   return <MateriForm kelasList={kelasList as any} initialData={materi as any} />

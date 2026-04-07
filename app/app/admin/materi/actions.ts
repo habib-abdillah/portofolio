@@ -1,15 +1,7 @@
 "use server"
 
-import { PrismaClient } from "@/app/generated/prisma/client"
-import { PrismaNeonHttp } from "@prisma/adapter-neon"
+import { neon } from "@neondatabase/serverless"
 import { revalidatePath } from "next/cache"
-
-const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
-  arrayMode: false,
-  fullResults: false,
-})
-// @ts-ignore
-const prisma = new PrismaClient({ adapter: neonAdapter })
 
 export async function createMateri(data: {
   judul: string
@@ -19,7 +11,12 @@ export async function createMateri(data: {
   kelasId: string
   isPublished: boolean
 }) {
-  await prisma.materi.create({ data })
+  const sql = neon(process.env.DATABASE_URL!)
+  const id = crypto.randomUUID()
+  await sql`
+    INSERT INTO "Materi" (id, judul, slug, deskripsi, content, "kelasId", "isPublished", "createdAt", "updatedAt") 
+    VALUES (${id}, ${data.judul}, ${data.slug}, ${data.deskripsi}, ${data.content}, ${data.kelasId}, ${data.isPublished}, NOW(), NOW())
+  `
   revalidatePath("/admin/materi")
   revalidatePath("/materi")
 }
@@ -32,22 +29,26 @@ export async function updateMateri(id: string, data: {
   kelasId: string
   isPublished: boolean
 }) {
-  await prisma.materi.update({ where: { id }, data })
+  const sql = neon(process.env.DATABASE_URL!)
+  await sql`
+    UPDATE "Materi" 
+    SET judul = ${data.judul}, slug = ${data.slug}, deskripsi = ${data.deskripsi}, content = ${data.content}, "kelasId" = ${data.kelasId}, "isPublished" = ${data.isPublished}, "updatedAt" = NOW()
+    WHERE id = ${id}
+  `
   revalidatePath("/admin/materi")
   revalidatePath("/materi")
 }
 
 export async function deleteMateri(id: string) {
-  await prisma.materi.delete({ where: { id } })
+  const sql = neon(process.env.DATABASE_URL!)
+  await sql`DELETE FROM "Materi" WHERE id = ${id}`
   revalidatePath("/admin/materi")
   revalidatePath("/materi")
 }
 
 export async function togglePublish(id: string, isPublished: boolean) {
-  await prisma.materi.update({
-    where: { id },
-    data: { isPublished: !isPublished },
-  })
+  const sql = neon(process.env.DATABASE_URL!)
+  await sql`UPDATE "Materi" SET "isPublished" = ${!isPublished}, "updatedAt" = NOW() WHERE id = ${id}`
   revalidatePath("/admin/materi")
   revalidatePath("/materi")
 }

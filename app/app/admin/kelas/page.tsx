@@ -1,18 +1,9 @@
-import { PrismaClient } from "@/app/generated/prisma/client"
-import { PrismaNeonHttp } from "@prisma/adapter-neon"
+import { neon } from "@neondatabase/serverless"
 import { createKelas, deleteKelas } from "./actions"
 
-const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
-  arrayMode: false,
-  fullResults: false,
-})
-// @ts-ignore
-const prisma = new PrismaClient({ adapter: neonAdapter })
-
 export default async function KelasPage() {
-  const kelasList = await prisma.kelas.findMany({
-    orderBy: { createdAt: "asc" },
-  })
+  const sql = neon(process.env.DATABASE_URL!)
+  const kelasList = await sql`SELECT * FROM "Kelas" ORDER BY "createdAt" ASC`
 
   return (
     <div>

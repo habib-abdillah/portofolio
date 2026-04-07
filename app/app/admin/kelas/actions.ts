@@ -1,20 +1,16 @@
 "use server"
 
-import { PrismaClient } from "@/app/generated/prisma/client"
-import { PrismaNeonHttp } from "@prisma/adapter-neon"
+import { neon } from "@neondatabase/serverless"
 import { revalidatePath } from "next/cache"
-
-const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
-  arrayMode: false,
-  fullResults: false,
-})
-// @ts-ignore
-const prisma = new PrismaClient({ adapter: neonAdapter })
+// Import crypto for generating cuid-like IDs (we will just use native crypto.randomUUID instead of cuid)
 
 export async function createKelas(nama: string) {
   try {
+    const sql = neon(process.env.DATABASE_URL!)
     console.log("Mencoba membuat kelas:", nama);
-    const result = await prisma.kelas.create({ data: { nama } });
+    // Convert to UUID since prisma default cuid generates strings, but text works fine for ID
+    const id = crypto.randomUUID();
+    const result = await sql`INSERT INTO "Kelas" (id, nama, "createdAt") VALUES (${id}, ${nama}, NOW()) RETURNING *`;
     console.log("Berhasil insert kelas:", result);
     revalidatePath("/admin/kelas")
   } catch (error) {
@@ -23,6 +19,7 @@ export async function createKelas(nama: string) {
 }
 
 export async function deleteKelas(id: string) {
-  await prisma.kelas.delete({ where: { id } })
+  const sql = neon(process.env.DATABASE_URL!)
+  await sql`DELETE FROM "Kelas" WHERE id = ${id}`
   revalidatePath("/admin/kelas")
 }
