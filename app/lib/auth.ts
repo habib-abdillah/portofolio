@@ -3,6 +3,7 @@ import { nextCookies } from "better-auth/next-js"
 import { Kysely } from "kysely"
 import { NeonDialect } from "kysely-neon"
 import { neon } from "@neondatabase/serverless"
+import { kyselyAdapter } from "@better-auth/kysely-adapter"
 
 const db = new Kysely<any>({
   dialect: new NeonDialect({
@@ -13,7 +14,9 @@ const db = new Kysely<any>({
 export const auth = betterAuth({
   baseURL: process.env.NEXT_PUBLIC_APP_URL || "https://habibabdillah.my.id",
   secret: process.env.BETTER_AUTH_SECRET || "build-time-secret-placeholder",
-  database: db,
+  database: kyselyAdapter(db, {
+    type: "postgres",
+  }),
   trustedOrigins: [
     process.env.NEXT_PUBLIC_APP_URL || "https://habibabdillah.my.id",
   ],
