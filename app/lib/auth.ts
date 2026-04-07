@@ -13,8 +13,8 @@ const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
 const prisma = new PrismaClient({ adapter: neonAdapter })
 
 export const auth = betterAuth({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL!,
-  secret: process.env.BETTER_AUTH_SECRET!,
+  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  secret: process.env.BETTER_AUTH_SECRET || "build-time-secret-placeholder",
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
