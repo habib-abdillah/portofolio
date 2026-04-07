@@ -22,6 +22,8 @@
     "@uiw/react-md-editor": "^4.1.0",
     "better-auth": "^1.6.0",
     "highlight.js": "^11.11.1",
+    "kysely": "^0.28.15",
+    "kysely-neon": "^2.0.2",
     "next": "16.2.2",
     "next-auth": "^5.0.0-beta.30",
     "react": "19.2.4",

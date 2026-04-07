@@ -1,23 +1,19 @@
 import { betterAuth } from "better-auth"
-import { prismaAdapter } from "@better-auth/prisma-adapter"
 import { nextCookies } from "better-auth/next-js"
-import { PrismaClient } from "../app/generated/prisma/client"
-import { PrismaNeonHttp } from "@prisma/adapter-neon"
+import { Kysely } from "kysely"
+import { NeonDialect } from "kysely-neon"
+import { neon } from "@neondatabase/serverless"
 
-const neonAdapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {
-  arrayMode: false,
-  fullResults: false,
+const db = new Kysely<any>({
+  dialect: new NeonDialect({
+    neon: neon(process.env.DATABASE_URL!),
+  }),
 })
-
-// @ts-ignore
-const prisma = new PrismaClient({ adapter: neonAdapter })
 
 export const auth = betterAuth({
   baseURL: process.env.NEXT_PUBLIC_APP_URL || "https://habibabdillah.my.id",
   secret: process.env.BETTER_AUTH_SECRET || "build-time-secret-placeholder",
-  database: prismaAdapter(prisma, {
-    provider: "postgresql",
-  }),
+  database: db,
   trustedOrigins: [
     process.env.NEXT_PUBLIC_APP_URL || "https://habibabdillah.my.id",
   ],
