@@ -2,34 +2,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#0a0a0f] font-body">
 
-      {/* ───────────── NAVBAR ───────────── */}
-      <nav className="
-        sticky top-0 z-50
-        flex justify-between items-center
-        px-6 md:px-16 py-4
-        border-b border-white/5
-        backdrop-blur-md bg-[#0a0a0f]/80
-      ">
-        <span className="font-display font-extrabold text-lg tracking-tight text-white">
-          DEV<span className="text-[#7c6dfa]">.</span>portofolio
-        </span>
-
-        <ul className="hidden md:flex gap-8 list-none">
-          {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
-            <li key={item}>
-              <a
-                href={`#${item.toLowerCase()}`}
-                className="
-                  text-sm text-[#888] tracking-widest uppercase
-                  hover:text-white transition-colors duration-200
-                "
-              >
-                {item}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
 
       {/* ───────────── HERO ───────────── */}
       <section className="max-w-4xl mx-auto px-6 md:px-0 pt-24 pb-20">

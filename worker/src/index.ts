@@ -31,7 +31,15 @@ export default {
           WHERE m."isPublished" = true
           ORDER BY m."createdAt" DESC
         `
-        return new Response(JSON.stringify(data), { headers })
+        const mapped = data.map((m: any) => ({
+          id: m.id,
+          judul: m.judul,
+          slug: m.slug,
+          deskripsi: m.deskripsi,
+          createdAt: m.createdAt,
+          kelas: { nama: m.kelas_nama }
+        }))
+        return new Response(JSON.stringify(mapped), { headers })
       }
 
       // GET /api/materi/:slug
@@ -48,7 +56,12 @@ export default {
         if (data.length === 0) {
           return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers })
         }
-        return new Response(JSON.stringify(data[0]), { headers })
+        const m = data[0] as any
+        const mapped = {
+          ...m,
+          kelas: { nama: m.kelas_nama }
+        }
+        return new Response(JSON.stringify(mapped), { headers })
       }
 
       // GET /api/blog

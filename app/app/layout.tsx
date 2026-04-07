@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Syne, Outfit } from 'next/font/google'
 import './globals.css'
+import Navbar from './components/Navbar'
 
 // Mengunduh font dari Google Fonts secara otomatis saat build
 const syne = Syne({
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id">
+    <html lang="id" data-color-mode="dark">
       {/*
         className di <body>:
         ${syne.variable}   → daftarkan font Syne sebagai CSS variable
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         antialiased        → rendering font lebih halus di layar
       */}
       <body className={`${syne.variable} ${outfit.variable} font-sans bg-[#0a0a0f] text-[#e8e8f0] antialiased`}>
+        <Navbar />
         {children}
       </body>
     </html>
