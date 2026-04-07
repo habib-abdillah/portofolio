@@ -21,5 +21,10 @@
   },
   "observability": {
     "enabled": true
+  },
+  "vars": {
+    "WORKER_URL": "https://worker.muhabibabd.workers.dev",
+    "NEXT_PUBLIC_APP_URL": "https://habibabdillah.my.id",
+    "ADMIN_EMAIL": "muhabibabd@gmail.com"
   }
 }
