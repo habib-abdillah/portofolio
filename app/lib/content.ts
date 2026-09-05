@@ -42,6 +42,8 @@ function getContentDirectory(subfolder: string): string {
   const possiblePaths = [
     path.join(/* turbopackIgnore: true */ process.cwd(), "content", subfolder),
     path.join(/* turbopackIgnore: true */ process.cwd(), "app", "content", subfolder),
+    path.join(/* turbopackIgnore: true */ process.cwd(), "..", "content", subfolder),
+    path.join(/* turbopackIgnore: true */ process.cwd(), "..", "app", "content", subfolder),
   ]
 
   for (const p of possiblePaths) {
