@@ -1,41 +1,84 @@
-import type { Metadata } from 'next'
-import { Syne, Outfit } from 'next/font/google'
-import './globals.css'
-import Navbar from './components/Navbar'
+import type { Metadata, Viewport } from "next"
+import { Syne, Outfit, JetBrains_Mono } from "next/font/google"
+import "./globals.css"
+import Navbar from "./components/Navbar"
+import Footer from "./components/Footer"
+import ScrollProgressBar from "./components/ScrollProgressBar"
 
-// Mengunduh font dari Google Fonts secara otomatis saat build
 const syne = Syne({
-  subsets: ['latin'],
-  variable: '--font-syne',   // jadi CSS variable, bisa dipanggil di mana saja
-  weight: ['400', '700', '800'],
+  subsets: ["latin"],
+  variable: "--font-syne",
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
 })
 
 const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-outfit',
-  weight: ['300', '400', '500'],
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 })
 
-export const metadata: Metadata = {
-  title: 'Habib — Web Developer',
-  description: 'Portfolio web developer berbasis Indonesia',
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500", "600"],
+  display: "swap",
+})
+
+export const viewport: Viewport = {
+  themeColor: "#08090d",
+  width: "device-width",
+  initialScale: 1,
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  title: {
+    default: "Muhammad Habib Abdillah — Full-Stack Developer & Systems Architect",
+    template: "%s | Habib.dev",
+  },
+  description:
+    "Portfolio resmi Muhammad Habib Abdillah — Full-Stack Developer & Systems Architect spesialis PHP, Laravel, Next.js, dan arsitektur sistem informasi modular yang scalable.",
+  keywords: [
+    "Muhammad Habib Abdillah",
+    "Full-Stack Developer",
+    "Laravel Developer Indonesia",
+    "Next.js Developer",
+    "Systems Architect",
+    "Portfolio Web Developer",
+  ],
+  authors: [{ name: "Muhammad Habib Abdillah" }],
+  creator: "Muhammad Habib Abdillah",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "https://habib.dev",
+    title: "Muhammad Habib Abdillah — Full-Stack Developer",
+    description:
+      "Membangun sistem informasi modular, performan, dan berdaya tahan tinggi dengan Laravel, Next.js, dan Cloud DevOps.",
+    siteName: "Habib Portfolio",
+  },
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="id" data-color-mode="dark">
-      {/*
-        className di <body>:
-        ${syne.variable}   → daftarkan font Syne sebagai CSS variable
-        ${outfit.variable} → daftarkan font Outfit sebagai CSS variable
-        font-sans          → set font default ke system font (akan kita override di tailwind.config)
-        bg-[#0a0a0f]       → warna background halaman, gelap hampir hitam
-        text-[#e8e8f0]     → warna teks default, putih keabu-abuan
-        antialiased        → rendering font lebih halus di layar
-      */}
-      <body className={`${syne.variable} ${outfit.variable} font-sans bg-[#0a0a0f] text-[#e8e8f0] antialiased`}>
+    <html lang="id" className="dark scroll-smooth">
+      <body
+        suppressHydrationWarning={true}
+        className={`${syne.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans bg-[#090a0f] text-[#f8fafc] antialiased selection:bg-blue-600/30 selection:text-white relative min-h-screen flex flex-col`}
+      >
+        <ScrollProgressBar />
+
+        {/* Global Subtle Grid */}
+        <div className="fixed inset-0 bg-grid-pattern opacity-30 pointer-events-none -z-10" />
+
         <Navbar />
-        {children}
+        <div className="flex-1">{children}</div>
+        <Footer />
       </body>
     </html>
   )
