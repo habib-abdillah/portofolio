@@ -1,6 +1,5 @@
-/** @type {import('next').NextConfig} */
-const config = {
-  // Static markdown site - no OpenNext configuration needed
-}
+// default open-next.config.ts file created by @opennextjs/cloudflare
+import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
-export default config
+export default defineCloudflareConfig({
+});
